@@ -10,7 +10,7 @@ def create_socket():
         port = 9985
         s = socket.socket()
     except socket.error as msg:
-        print("socket creation failure: " + msg)
+        print("socket creation failure: " + str(msg))
 
 def bind_socket():
     try:
@@ -21,7 +21,7 @@ def bind_socket():
         s.bind((host, port))
         s.listen(3)
     except socket.error as msg:
-        print("socket bind failure: " + msg)
+        print("socket bind failure: " + str(msg))
         bind_socket()
 
 def accept_socket():
