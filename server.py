@@ -31,6 +31,24 @@ def accept_socket():
     send_commands(conn)
     conn.close()
 
+End='>!!> '
+def recv_end(conn):
+    total_data=[];data=''
+    while True:
+            data=str(conn.recv(1024), "utf-8")
+            if data[len(data) - len(End):] == End:
+                total_data.append(data)
+                break
+            total_data.append(data)
+            if len(total_data)>1:
+                #check if end_of_data was split
+                last_pair=total_data[-2]+total_data[-1]
+                if End in last_pair:
+                    total_data[-2]=last_pair[:last_pair.find(End)]
+                    total_data.pop()
+                    break
+    return ''.join(total_data)
+
 def send_commands(conn):
     while True:
         cmd = input()
@@ -40,8 +58,7 @@ def send_commands(conn):
             sys.exit()
         if (len(str.encode(cmd)) > 0):
             conn.send(str.encode(cmd))
-            client_response = str(conn.recv(1024), "utf-8")
-            print(client_response, end="")
+            print(recv_end(conn), end="")
 
 
 def main():
