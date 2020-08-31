@@ -41,7 +41,7 @@ def recv_end(conn):
                 break
             total_data.append(data)
             if len(total_data)>1:
-                #check if end_of_data was split
+                # check if end_of_data was split
                 last_pair=total_data[-2]+total_data[-1]
                 if End in last_pair:
                     total_data[-2]=last_pair[:last_pair.find(End)]
@@ -58,7 +58,7 @@ def send_commands(conn):
             sys.exit()
         if (len(str.encode(cmd)) > 0):
             conn.send(str.encode(cmd))
-            print(recv_end(conn), end="")
+            print(recv_end(conn[0]), end="")
 
 
 def main():
